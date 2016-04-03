@@ -1,0 +1,23 @@
+{
+  "name": "currency-rates-store",
+  "version": "0.1.0",
+  "description": "A storage bot which sync exchange rates",
+  "author": "Ben P.P. Tung",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/benpptung/currency-rates-store.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha test"
+  },
+  "dependencies": {
+    "debug": "^2.2.0",
+    "inherits": "^2.0.1"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^2.4.5"
+  }
+}
