@@ -19,10 +19,10 @@ describe('CurrencyRatesStore', _=>{
     expect(store.readyState).to.be('closed');
   });
 
-  it('should emit `loaded` while the store is initially ready', function(done) {
+  it('should emit `load` while the store is initially ready', function(done) {
     var store = CurrRatesStore({pull: pull});
     expect(store.base).to.be(null);
-    store.on('loaded', _=>{
+    store.on('load', _=>{
       expect(store.base).to.be('USD');
       done();
     })
@@ -32,7 +32,7 @@ describe('CurrencyRatesStore', _=>{
   describe('.rate()', _=>{
     it('should return exchange rate', function(done) {
       var store = CurrRatesStore({pull: pull});
-      store.on('loaded', _=>{
+      store.on('load', _=>{
 
         expect(store.rate('USD', 'EUR')).to.be(0.923322);
         expect(store.rate('AUD', 'CAD').toFixed(8)).to.be('0.98924767');
@@ -61,7 +61,7 @@ describe('CurrencyRatesStore', _=>{
         done();
       });
 
-      store.on('loaded', _=>{
+      store.on('load', _=>{
         store.rate('XBT', 'USD');
       })
     });
@@ -69,7 +69,7 @@ describe('CurrencyRatesStore', _=>{
 
   describe('.pair()', _=> {
     it('should return exchange rate', function(done) {
-      var store = CurrRatesStore({pull: pull}).on('loaded', _=>{
+      var store = CurrRatesStore({pull: pull}).on('load', _=>{
         expect(store.pair('EURUSD').toFixed(8)).to.be('1.08304578');
         expect(store.pair('CNYUSD').toFixed(8)).to.be('0.15205550');
         done();
@@ -84,7 +84,7 @@ describe('CurrencyRatesStore', _=>{
           expect(err.original).to.be.eql(pair);
           done();
         })
-        .on('loaded', _=>{
+        .on('load', _=>{
           store.pair(pair);
         });
     })
@@ -92,7 +92,7 @@ describe('CurrencyRatesStore', _=>{
 
   describe('.convert()', _=>{
     it('should accept an amount and return a Conversion object', function(done){
-      var store = CurrRatesStore({pull: pull}).on('loaded', _=>{
+      var store = CurrRatesStore({pull: pull}).on('load', _=>{
         var conv = store.convert(1000);
         expect(conv.amount).to.be(1000);
         expect(conv.store).to.be(store);
@@ -111,7 +111,7 @@ describe('CurrencyRatesStore', _=>{
           expect(err.original).to.be(amt);
           done();
         })
-        .on('loaded', store=>{
+        .on('load', store=>{
           store.convert(amt).from('EUR').to('USD');
         });
     });
@@ -122,7 +122,7 @@ describe('CurrencyRatesStore', _=>{
       var curr = 'EUR';
 
       CurrRatesStore({pull: pull})
-        .on('loaded', store=>{
+        .on('load', store=>{
           var conv = store.from(curr);
           expect(conv._from).to.be(curr);
           expect(conv.amount).to.be(null);
@@ -138,7 +138,7 @@ describe('CurrencyRatesStore', _=>{
       it('should convert the amount based on the properties', function(done) {
 
         CurrRatesStore({pull: pull})
-          .on('loaded', store=>{
+          .on('load', store=>{
             expect(store.from('EUR').to('USD').toFixed(8)).to.be('1.08304578');
             expect(store.convert(100).from('EUR').to('USD').toFixed(8)).to.be('108.30457847');
             done();
