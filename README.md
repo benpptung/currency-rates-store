@@ -12,7 +12,7 @@ var store = CurrStore({pull: pull});
   // log error, warn, info events
 ['error', 'warn', 'info'].forEach(lv=> store.on(lv, e=> console.log(e);));
 
-store.on('loaded', store=>{
+store.on('load', store=>{
 
   // convert €100 EUR to USD 
   console.log(store.convert(100).from('EUR').to('USD'));
