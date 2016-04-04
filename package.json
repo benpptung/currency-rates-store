@@ -1,6 +1,6 @@
 {
   "name": "currency-rates-store",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A storage bot which sync exchange rates",
   "author": "Ben P.P. Tung",
   "license": "MIT",
