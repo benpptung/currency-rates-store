@@ -14,16 +14,17 @@ describe('CurrencyRatesStore', _=>{
     var store = CurrRatesStore({pull: pull});
     expect(store.ts).to.be(null);
     expect(store.rates).to.be(null);
-    expect(store.base).to.be(null);
+    expect(store.base).to.be('USD');
     expect(store.wait).to.be(10800000);
     expect(store.readyState).to.be('closed');
   });
 
   it('should emit `load` while the store is initially ready', function(done) {
     var store = CurrRatesStore({pull: pull});
-    expect(store.base).to.be(null);
+    expect(store.base).to.be('USD');
     store.on('load', _=>{
       expect(store.base).to.be('USD');
+      expect(store.loaded).to.be.ok();
       done();
     })
   });
@@ -141,6 +142,7 @@ describe('CurrencyRatesStore', _=>{
           .on('load', store=>{
             expect(store.from('EUR').to('USD').toFixed(8)).to.be('1.08304578');
             expect(store.convert(100).from('EUR').to('USD').toFixed(8)).to.be('108.30457847');
+            expect(store.convert(100).to('EUR').toFixed(6)).to.be('92.332200')
             done();
           })
       });
