@@ -4,7 +4,7 @@ A storage bot to sync exchange rates with any exchange rates api
 
 ```
 const CurrStore = require('currency-rates-store');
-const pull = require('currency-restapi-openexchangerates').Latest('YOUR_APP_ID');
+const pull = require('currency-restapi-currencylayer').Live('YOUR_ACCESS_KEY');
 
 
 // Default on `USD`, and 3 hours between requests
@@ -41,19 +41,20 @@ store.on('load', store=>{
 
 # Options
 
-- `pull`: restapi wrapper. node.js style callback. it should callback the latest rates in the following structure
+- `pull`: An async function. it should callback the latest rates in the following structure. Usually, it wraps exchange rates sites api. Following are modules designed for `currency-rates-store`
 
-  A rest api example - [currency-restapi-openexchange](https://www.npmjs.com/package/currency-restapi-openexchange)
+  - [currency-restapi-currencylayer](https://www.npmjs.com/package/currency-restapi-currencylayer)
+  - [currency-restapi-openexchange](https://www.npmjs.com/package/currency-restapi-openexchange)
   
-- `base`: 'USD|EUR|GPT...'. which currency this rates should be based on. Default: USD 
-- `wait`: milliseconds. Default to `3 hours` between requests. minimum 10 minutes.
+- `base`: 'USD|EUR|GBP...'. which currency this rates should be based on. Default: USD 
+- `wait`: refresh in milliseconds. Default to `3 hours` between refreshs. minimum 10 minutes. However, if any error occurred from `pull` callback, it will use `util-retry` to retry the `pull` 3 times. 
 
 
 ```
 {
   base: 'USD|EUR|GBP'   - tell which currency this rates is based on
   rates: {
-    USD: 1,             - If base == 'USD', this property should be 1
+    USD: 1,             - If base == 'USD', this value should be 1
     GBP: ...
     EUR: ...
     ...
