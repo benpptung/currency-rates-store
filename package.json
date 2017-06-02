@@ -1,6 +1,6 @@
 {
   "name": "currency-rates-store",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "description": "A storage bot which sync exchange rates",
   "author": "Ben P.P. Tung",
   "license": "MIT",
@@ -13,8 +13,8 @@
     "test": "mocha test"
   },
   "dependencies": {
+    "component-emitter": "^1.2.1",
     "debug": "^2.2.0",
-    "inherits": "^2.0.1",
     "util-retry": "^1.0.0"
   },
   "devDependencies": {
